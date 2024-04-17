@@ -210,3 +210,8 @@ print(df[df['title'].apply(string_bulucu)][['title', 'views']].sort_values('view
 # 2.Yol
 print(df[df['title'].apply(lambda x: 'new' in x.lower())][['title', 'views']].sort_values('views', ascending=False))
 # endregion
+
+
+# region trending_date'sı en yeni olan videoyu göster
+print(df[['trending_date', 'title']].sort_values('trending_date',ascending=False).head(1))
+# endregion
