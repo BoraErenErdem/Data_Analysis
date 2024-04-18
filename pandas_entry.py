@@ -65,7 +65,7 @@ print(df['Sütun2'])
 print(type(df['Sütun2']))  # DataFrame Serilerden oluşur. Yani DataFrame'den seri alabilirsin.
 
 print(df[['Sütun1']])
-print(type(df[['Sütun1']]))  # [[]] oarantezden dolayı tipi DataFrame olarak verdi.
+print(type(df[['Sütun1']]))  # [[]] parantezden dolayı tipi DataFrame olarak verdi.
 
 print(df.loc['Bora'])  # index değeri verip o indexte tutulan veriye erişebilirsin
 print(df.loc[['Bora']])  # DataFrame olarak verir çıktı verir [[]]

@@ -177,8 +177,16 @@ print(df.groupby('channel_title')[['like dislike oranı']].sum().sort_values('li
 
 
 # region Hangi kanalın videoları ortalama olarak en yüksek izlenme sayısına sahip   # ????????? çıktıda hata var ?????????
-print(df.groupby('channel_title')[['views']].mean().sort_values('views', ascending=False).head(1))
+print(df.groupby('channel_title')[['views']].mean().sort_values('views', ascending=False))
+
+
+df['ortalama izlenme sayısı'] = (df['views'].sum()) / (df['channel_title'].count())
+
+print(df.groupby('channel_title')[['ortalama izlenme sayısı']].max().sort_values('ortalama izlenme sayısı', ascending=False))  # ikisi farklı sonuç veriyor
+print(df.groupby('channel_title')[['ortalama izlenme sayısı']].idxmax().sort_values('ortalama izlenme sayısı', ascending=False))
 # endregion
+
+
 
 
 # region Hangi kanalın videoları, ortalama olarak en yüksek beğeni sayısına sahiptir?  # ????? çıktıda hata var ??????
@@ -191,7 +199,7 @@ print(df.groupby('channel_title')[['comment_count']].mean().sort_values('comment
 # endregion
 
 
-# region Hangi kanalın videolarının ortalama olarak en fazla yorum sayısına sahip olduğunu bul
+# region Hangi 2 kanalın videolarının ortalama olarak en fazla yorum sayısına sahip olduğunu bul
 print(df.groupby('channel_title')[['comment_count']].mean().sort_values('comment_count', ascending=False).head(2))
 # endregion
 
