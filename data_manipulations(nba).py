@@ -155,3 +155,91 @@ print(df.groupby('Position')[['Salary', 'Name']].max().sort_values('Salary',asce
 
 print(df[df['Salary'] == df.groupby('Position')['Salary'].transform('max')])  # doğru olan çözüm
 # endregion
+
+
+# region ilk 10 kaydı getir
+df = pd.read_csv('Data/nba.csv')
+print(df.to_string())
+
+print(df.head(10))
+# endregion
+
+
+# region toplam kayıt miktarı ne kadardır
+print(df.shape[0])
+# endregion
+
+
+# region tüm oyuncuların toplam maaş ortalaması # ????? İkisi de doğru olmaz mı? ???????
+print(df.groupby('Name')[['Salary']].sum().mean())
+
+print(df['Salary'].mean())
+# endregion
+
+
+# region En yüksek oyuncunun maaşı ne kadardır
+
+# 1.Yol
+print(df.groupby('Salary')[['Name']].max().sort_values('Salary', ascending=False).head(1))
+
+# 2.Yol
+print(df[df['Salary'] == df['Salary'].max()][['Name', 'Salary']])
+# endregion
+
+
+# region Yaşları 20 ile 25 arasında olan oyuncuların ismini ve oynadıkları takımları azalan şekilde sıralı olarak getir
+
+# 1.Yol
+print(df.query('20 <= Age <= 25')[['Name', 'Team', 'Age']].sort_values('Age', ascending=False).to_string())
+
+# 2.Yol
+print(df[df['Age'].between(20, 25)][['Name', 'Team', 'Age']].sort_values('Age', ascending=False).to_string())  # between() fonksiyonu ile == operatörü kullanılmaz çünkü == verdiğimiz zaman serinin her bir değerini belirli bir ararlığa karşı karşılaştıramadığımız için Empty DataFrame elde ettmiş oluruz. Yani between() fonksiyonu ile == kullanılmaz.
+
+# 3.Yol
+print(df[(df['Age'] >= 20) & (df['Age'] <= 25)][['Name', 'Team', 'Age']].sort_values('Age', ascending=False).to_string())
+# endregion
+
+
+# region "John Holland" isimli oyuncunun oynadığı takım hangisidir ve aldığı maaş nedir
+def oyuncu_bulucu(Name):
+    if Name == 'John Holland':
+        return True
+    else:
+        return False
+
+print(df[df['Name'].apply(oyuncu_bulucu)][['Team', 'Name', 'Salary']])
+
+# 2.Yol
+print(df[df['Name'] == 'John Holland'][['Team', 'Salary']])
+# endregion
+
+
+# region Takımlara göre oyuncuların ortalama maaş bilgisi
+print(df.groupby('Team')[['Salary']].mean()[['Salary']].sort_values('Salary', ascending=False).to_string())
+# endregion
+
+
+# region kaç farklı takım var
+print(df['Team'].nunique())
+# endregion
+
+
+# region Her takımda kaç oyuncu oynamaktadır
+print(df.groupby('Team')[['Name']].count())
+# endregion
+
+
+# region ismi içinde 'cur' geçen kayıtları bul
+
+# 1.Yol
+def isim_bulucu(Name):
+    if 'cur' in Name.lower():
+        return True
+    else:
+        return False
+
+print(df[df['Name'].apply(isim_bulucu)].to_string())
+
+# 2.Yol
+print(df[df['Name'].apply(lambda x: 'cur' in x.lower())].to_string())
+# endregion

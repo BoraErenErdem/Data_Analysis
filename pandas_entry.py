@@ -91,4 +91,8 @@ print(df)
 
 result = df.drop('Sütun7', axis=1)  # Bu işlemde değişkene atadığımız için artık DataFramemiz değişti.
 print(result)
+
+
+df.reset_index()  # indexleri resetler yani indexte ister isim yazsın ister sayı yazsın resetleyip 0'dan başlayarak indexlemeye yarar.
+df.set_index(['Sütun1', 'Sütun2', 'Sütun3', 'Sütun4', 'Sütun5'])  # indexleri atama yapar
 # endregion

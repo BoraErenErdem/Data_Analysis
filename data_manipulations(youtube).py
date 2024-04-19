@@ -5,7 +5,7 @@ import numpy as np
 from os import path
 
 df = pd.read_csv("Data/youtube-ing.csv")
-print(df.to_string())
+print(df)
 
 
 # region en çok görüntülenmeye sahip ilk 10 farklı videonun title ve views sütunlarını ekrana bas
@@ -48,7 +48,7 @@ def tag_sayici(tags):
 
 df['tag sayısı'] = df['tags'].apply(tag_sayici)
 
-print(df[['title', 'tag sayısı']])
+print(df[['title', 'tag sayısı']].sort_values('tag sayısı', ascending=False))
 
 
 # 2.Yol
@@ -222,4 +222,120 @@ print(df[df['title'].apply(lambda x: 'new' in x.lower())][['title', 'views']].so
 
 # region trending_date'sı en yeni olan videoyu göster
 print(df[['trending_date', 'title']].sort_values('trending_date',ascending=False).head(1))
+# endregion
+
+
+# region ilk 10 kaydı getir
+print(df.head(10))
+# endregion
+
+
+# region ikinci 5 kaydı getiriniz
+print(df[5:10])
+# endregion
+
+
+# region data'da bulunan sütun isimleri ve sayısını bul
+print(df.columns)  # sütunların isimlerini bulma
+print(df.columns.shape[0])  # sütunların sayısını bulma
+print(df.shape[1])  # sütunların sayısını bulma
+# endregion
+
+
+# region likes ve dislikes sayılarının ortalaması
+print(df['likes'].mean())
+print(df['dislikes'].mean())
+# endregion
+
+
+# region ilk 50 videonun likes ve dislikes sütunları
+print(df[['likes', 'dislikes', 'title']].head(50))
+# endregion
+
+
+# region en çok görüntülenen video hangisi
+print(df.groupby('title')[['views']].max().sort_values('views', ascending=False).head(1))
+# endregion
+
+
+# region en düşük görüntülenen video hangisidir
+print(df.groupby('title')[['views']].idxmin().sort_values('views', ascending=False).tail(1))
+# endregion
+
+
+# region en fazla görüntülenen ilk 10 video
+print(df.sort_values('views', ascending=False)[['title', 'views']].head(10))
+# endregion
+
+
+# region Kategoriye göre beğeni ortalamalarını sıralı şekilde getir
+print(df.groupby('category_id')[['likes']].mean().sort_values('likes', ascending=False))
+# endregion
+
+
+# region kategoriye göre yorum sayılarını sıralı şekilde getir
+print(df.groupby('category_id')[['comment_count']].sum().sort_values('comment_count', ascending=False))
+# endregion
+
+
+# region her kategoride kaç video var
+print(df.groupby('category_id')[['title']].count().sort_values('title', ascending=False))
+# endregion
+
+
+# region Her videonun title uzunluğu bilgisini yeni sütunda göster
+
+# 1.Yol
+df['title_uzunlugu'] = df['title'].apply(lambda x: x.count(""))
+print(df[['title_uzunlugu']].sort_values('title_uzunlugu', ascending=False))
+
+# 2.Yol
+def title_uzunlugu(title):
+    return len(title)
+
+df['title_uzunlugu'] = df['title'].apply(title_uzunlugu)
+print(df[['title_uzunlugu']].sort_values('title_uzunlugu', ascending=False))
+# endregion
+
+
+# region her video için kullanılan tags sayısını yeni sütunda göster
+
+# 1.Yol
+def tags_calculator(tags):
+    if '|' in tags:
+        return tags.count("|")
+    else:
+        return 0
+
+df['tags calculator'] = df['tags'].apply(tags_calculator)
+print(df[['tags calculator', 'title']].sort_values('tags calculator', ascending=False))
+
+# 2.Yol
+df['tags calculator'] = df['tags'].apply(lambda x: x.count("|"))
+print(df[['tags calculator', 'title']].sort_values('tags calculator', ascending=False))
+# endregion
+
+
+# region En popüler videoları like/dislike oranına göre listele
+def like_dislike_ortalamasi(df: pd.DataFrame):
+    likelistesi = list(df['likes'])
+    dislikelistesi = list(df['dislikes'])
+
+    birlesikliste = list(zip(likelistesi,dislikelistesi))
+    ortalamalistesi = []
+    for like, dislike in birlesikliste:
+        if like + dislike == 0:
+            ortalamalistesi.append(0)
+        else:
+            ortalamalistesi.append(like / (like + dislike))
+    return ortalamalistesi
+
+df['like_dislike_orani'] = like_dislike_ortalamasi(df)
+print(df[['title', 'like_dislike_orani']].sort_values('like_dislike_orani', ascending=False))
+# endregion
+
+
+# region thumbnail_link,comments_disabled,ratings_disabled,video_error_or_removed,description sütunlarını silip kalan sütunları göster
+newdf = df.drop(['thumbnail_link','comments_disabled','ratings_disabled','video_error_or_removed','description'], axis=1)
+print(newdf)
 # endregion
