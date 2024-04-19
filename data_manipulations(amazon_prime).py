@@ -87,5 +87,18 @@ print(df[df['Payment Information'] == 'Visa'][['Name', 'Email Address', 'Members
 # endregion
 
 
-# region
+# region Hangi tür kullanıcılar en çok video izleme süresine sahiptir ve hangi cihazları kullanıyorlar (Devices Used) (Usage Frequency)
+print(df[df['Usage Frequency'] == df['Usage Frequency'].max()][['Name', 'Gender','Usage Frequency', 'Devices Used']].sort_values('Usage Frequency', ascending=False))
+# endregion
+
+
+# region Hangi kullanıcıların Username içinde 'x', 's', 'z', '0' yer almaktadır.
+def username_bulucu(Username: str):
+    if 'x' in Username.lower() and 's' in Username.lower() and 'z' in Username.lower():
+        return True
+    else:
+        return False
+
+
+print(df[df['Username'].apply(username_bulucu)][['Username', 'Name']].sort_values('Username', ascending=False).to_string())
 # endregion
