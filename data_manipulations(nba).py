@@ -170,9 +170,7 @@ print(df.shape[0])
 # endregion
 
 
-# region tüm oyuncuların toplam maaş ortalaması # ????? İkisi de doğru olmaz mı? ???????
-print(df.groupby('Name')[['Salary']].sum().mean())
-
+# region tüm oyuncuların toplam maaş ortalaması
 print(df['Salary'].mean())
 # endregion
 

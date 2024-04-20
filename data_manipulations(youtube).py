@@ -110,7 +110,7 @@ print(df.groupby(['title', 'publish_time'])[['views']].sum().sort_values('views'
 # endregion
 
 
-# region Kanal başına ortalama izlenme sayısı nedir ve en çok views olan kanal hangisidir?  # ????? viewsi sıralayınca izlenme sayıları doğru sıralanmıyor ?????
+# region Kanal başına ortalama izlenme sayısı nedir ve en çok views olan kanal hangisidir?
 print(df.groupby('channel_title')[['views']].mean(numeric_only=True).sort_values('views', ascending=False))
 # endregion
 
@@ -169,27 +169,21 @@ print(df.groupby('channel_title')[['views']].sum(numeric_only=True).sort_values(
 # endregion
 
 
-# region Hangi kanalın videoları, ortalama olarak en yüksek like/dislike oranına sahiptir?  # ?????? kontrol ettir ?????
+# region Hangi kanalın videoları, ortalama olarak en yüksek like/dislike oranına sahiptir?
 df['like dislike oranı'] = df['likes'] / (df['likes'] + df['dislikes'])
 
 print(df.groupby('channel_title')[['like dislike oranı']].sum().sort_values('like dislike oranı', ascending=False))
 # endregion
 
 
-# region Hangi kanalın videoları ortalama olarak en yüksek izlenme sayısına sahip   # ????????? çıktıda hata var ?????????
+# region Hangi kanalın videoları ortalama olarak en yüksek izlenme sayısına sahip
 print(df.groupby('channel_title')[['views']].mean().sort_values('views', ascending=False))
-
-
-df['ortalama izlenme sayısı'] = (df['views'].sum()) / (df['channel_title'].count())
-
-print(df.groupby('channel_title')[['ortalama izlenme sayısı']].max().sort_values('ortalama izlenme sayısı', ascending=False))  # ikisi farklı sonuç veriyor
-print(df.groupby('channel_title')[['ortalama izlenme sayısı']].idxmax().sort_values('ortalama izlenme sayısı', ascending=False))
 # endregion
 
 
 
 
-# region Hangi kanalın videoları, ortalama olarak en yüksek beğeni sayısına sahiptir?  # ????? çıktıda hata var ??????
+# region Hangi kanalın videoları, ortalama olarak en yüksek beğeni sayısına sahiptir?
 print(df.groupby('channel_title')[['views']].mean().sort_values('views', ascending=False).head(1))
 # endregion
 
