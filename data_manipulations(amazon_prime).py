@@ -72,7 +72,7 @@ print(df.groupby('Subscription Plan').count().drop_duplicates())
 # endregion
 
 
-# region Kullanıcıların yaşadıkalrı yerleri listele
+# region Kullanıcıların yaşadıkları yerleri listele
 print(df['Location'].to_string())
 # endregion
 
