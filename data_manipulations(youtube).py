@@ -181,8 +181,6 @@ print(df.groupby('channel_title')[['views']].mean().sort_values('views', ascendi
 # endregion
 
 
-
-
 # region Hangi kanalın videoları, ortalama olarak en yüksek beğeni sayısına sahiptir?
 print(df.groupby('channel_title')[['views']].mean().sort_values('views', ascending=False).head(1))
 # endregion
