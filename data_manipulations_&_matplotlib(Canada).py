@@ -7,14 +7,14 @@ import openpyxl  # openpyxl modülü xml dosyasını okunmasını sağlar
 
 
 # region xlsx formatındaki excel'in 'Canada by Citizenship' isimli sheetini oku ve ilk 20 satır ve son 2 satır okuma.
-df_can = pd.read_excel('Data/Canada.xlsx', sheet_name='Canada by Citizenship', skiprows=(20), skipfooter=2)
-print(df_can.head().to_string())
-# endregion
+df_can = pd.read_excel('Data/Canada.xlsx', sheet_name='Canada by Citizenship', skiprows=(20), skipfooter=2)  # skipfooter = sondan kaç satır atlamak istiyosan o kadarını gir
+print(df_can.head().to_string())  # sheet_name = okumak istediğin sayfa ismini yaz
+# endregion                       # skiprows = ilk kaç satırı atlamak istiyosan o kadarını gir
 
 
 # region Eski sütun isimlerini yenileriyle değiştir (OdName ==> Country) (AreaName ==> Continent) (RegName ==> Region)
 df_can.rename(columns={'OdName':'Country', 'AreaName':'Continent', 'RegName':'Region'}, inplace=True)
-print(df_can.head().to_string())
+print(df_can.head().to_string())  # .rename(columns={}) bu fonksiyonda sütunların adını dictionarymiş gibi değiştirdik ve inplace=True ile üstüne kaydettik.
 # endregion
 
 
@@ -99,7 +99,7 @@ count, bin_edges = np.histogram(df_baltic_countries, bins=10)  # bins = grafikte
 print(count)  # her bir bölümdeki değerlerin sayısını temsil eder
 print(bin_edges)  # bölüm sınırlarını temsil eder
 
-df_baltic_countries.plot(kind='hist', stacked=False, alpha=0.50, figsize=(10,7), color=['blue','purple','yellow'], xticks=bin_edges)  # xticks= ifadesi x ekseni için özelleştirilmiş işaret veya etiket etkler..!
+df_baltic_countries.plot(kind='hist', stacked=False, alpha=0.50, figsize=(10,7), color=['blue','purple','yellow'], xticks=bin_edges)  # xticks= ifadesi x ekseni için özelleştirilmiş işaret veya etiket ekler..!
 plt.title('Denmark, Norway ve Sweden Histogram Grafiği (1980 - 2013)', color='green')
 plt.ylabel(ylabel='Ülke Sayısı', color='green')
 plt.xlabel(xlabel='Göç Sayısı', color='green')

@@ -7,7 +7,7 @@ from os import path
 # print(path.abspath('auto.csv'))
 
 df = pd.read_csv('Data/auto.csv')
-print(df.to_string())
+print(df.head().to_string())
 
 
 
@@ -21,7 +21,7 @@ df.columns = ["symboling", "normalized-losses", "make", "fuel-type", "aspiration
                 "drive-wheels", "engine-location", "wheel-base", "length", "width", "height", "curb-weight",
                 "engine-type", "num-of-cylinders", "engine-size", "fuel-system", "bore", "stroke", "compression-ratio",
                 "horsepower", "peak-rpm", "city-mpg", "highway-mpg", "price"]
-print(df.to_string())
+print(df.head().to_string())
 # endregion
 
 
@@ -56,7 +56,7 @@ print(df['price'].to_string())
 # 2.Yol (Frekans Aralığı İle Eksik Verileri Değiştirme)
 # İlgili sütunda bulunan değerlerin frekans aralığını alarak yani sütunda ne sıklıkla bulunduğunu belirleyerek bulunduğu hücreye yani NaN olan yerlere yazdık.
 df['num-of-doors'] = df['num-of-doors'].replace(to_replace=np.nan, value=df['num-of-doors'].value_counts().idxmax())  # idxmax() ilgili sütunda en çok geçen değeri verir
-print(df['num-of-doors'].to_string())   # value_counts() bir sütunda geçen farklı değerlerin kaç tane olduğunu bize söyler
+print(df['num-of-doors'].to_string())                                                                       # value_counts() bir sütunda geçen farklı değerlerin kaç tane olduğunu bize söyler
 
 df['bore'] = df['bore'].replace(to_replace=np.nan, value=df['bore'].value_counts().idxmax())
 print(df['bore'].to_string())
@@ -65,7 +65,7 @@ print(df['bore'].to_string())
 
 
 # region Veri Standardizasyonu (Machine Learning)
-# ML algoritmalarında kullanılacak değerlerin belirli bir standartta olması gerekir. Veri setindeki farklı birimlere sahip değerler ML algoritmamsının train edip ürettiği sonuçları olumsuz etkiler. Bunun için verinin bir standartta olması çok önemlidir.
+# ML algoritmalarında kullanılacak değerlerin belirli bir standartta olması gerekir. Veri setindeki farklı birimlere sahip değerler ML algoritmasının train edip ürettiği sonuçları olumsuz etkiler. Bunun için verinin bir standartta olması çok önemlidir.
 df['city_l/km'] = 235/df['city-mpg']
 df['highway_l/km'] = 235/df['highway-mpg']
 # endregion
@@ -83,7 +83,7 @@ print(df[['length', 'width', 'height']])
 
 # region Dummy Variable (Machine Learning)
 # Sözel ya da kategorik değişkenlerin scaler büyüklüklere dönüştürmemizi sağlar.
-dummy_variable_df = pd.get_dummies(df['fuel-type'], dtype=float)  # veri setinde 'fuel-type' sütununda kategorik değerler diesel, gas vb bulunmaktad. Bunları scaler büyüklüklere dönüştürdük.
+dummy_variable_df = pd.get_dummies(df['fuel-type'], dtype=float)  # veri setinde 'fuel-type' sütununda kategorik değerler diesel, gas vb bulunmaktadır. Bunları scaler büyüklüklere dönüştürdük.
 print(dummy_variable_df)                                          # get_dummies() str olan veri türünü int ya da floata dönüştürür
 # endregion
 

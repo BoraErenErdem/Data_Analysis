@@ -1,7 +1,9 @@
 
 
+import numpy as np
 import pandas as pd
 from os import path
+import matplotlib.pyplot as plt
 
 # print(path.abspath("nba.csv"))
 
@@ -240,4 +242,116 @@ print(df[df['Name'].apply(isim_bulucu)].to_string())
 
 # 2.Yol
 print(df[df['Name'].apply(lambda x: 'cur' in x.lower())].to_string())
+# endregion
+
+
+# region Takımların ortalama maaşlarını gösteren bir çizgi grafiği yapın (ilk 5 takımı gösterin)
+df.groupby('Team')[['Salary']].mean().head().plot(kind='bar', figsize=(10,7), stacked=False, alpha=0.50)
+plt.title('NBA Takımlarının Maaş Ortalamalarının Bar Grafiği', color='r')
+plt.ylabel('Takım Sayısı', color='r')
+plt.xlabel('Takımlar', color='r')
+plt.legend()
+plt.show()
+# endregion
+
+
+# region Oyuncuların yaş dağılımını gösteren bir histogram oluştur
+df_sorted = df.sort_values('Age', ascending=False)[['Name', 'Age']]
+print(df_sorted)
+
+df_age = df_sorted['Age']
+print(df_age)
+
+count, bin_edges = np.histogram(df_age, bins=10)
+print(count)
+print(bin_edges)
+
+df_age.plot(kind='hist', figsize=(10,7), stacked=False, alpha=0.50, color='green')
+plt.title('Yaşlarına göre histogram grafiği', color='r')
+plt.ylabel('Oyuncu Sayısı', color='r')
+plt.xlabel('Yaş', color='r')
+plt.grid()
+plt.show()
+# endregion
+
+
+# region Takımların oyuncu sayısını gösteren bir çubuk grafik oluştur
+df_player_count = df.groupby('Team')[['Team']].count()
+print(df_player_count)
+
+df_player_count.plot(kind='bar', stacked=False, figsize=(10,7), alpha=0.50, color='b')
+plt.title('Takımlara göre oyuncu sayısı bar grafiği', color='r')
+plt.ylabel('Takım Sayısı', color='r')
+plt.xlabel('Oyuncu Sayısı', color='r')
+plt.grid()
+plt.show()
+# endregion
+
+
+# region Oyuncuların pozisyon dağılımını gösteren bir pasta grafiği oluştur
+df_pozisyon_dagilimi = df.groupby('Position')[['Position']].count()
+print(df_pozisyon_dagilimi)
+
+df_pozisyon_dagilimi['Position'].plot(kind='pie', stacked=False, shadow=True, labels=None, startangle=90, figsize=(10,7), autopct='%1.1f%%', pctdistance=1.1, explode=[0.1, 0.1, 0.1, 0.1, 0.1])
+plt.axis('equal')
+plt.title('Oyuncuların Pozisyon Dağılımını Gösteren Pasta Grafiği')
+plt.legend(labels=df_pozisyon_dagilimi.index)
+plt.show()
+# endregion
+
+
+# region Takımların oyuncularının ortalama yaşlarının dağılımını göstermek için bir histogram oluştur
+df_takimlarin_ort_yasi = df.groupby('Team')[['Age']].mean()
+print(df_takimlarin_ort_yasi.sort_values('Age', ascending=False))
+
+count, bin_edges = np.histogram(df_takimlarin_ort_yasi, bins=10)
+print(count)
+print(bin_edges)
+
+df_takimlarin_ort_yasi.plot(kind='hist', stacked=False, alpha=0.50, figsize=(10,7), color='purple', bins=10)
+plt.title('Takımlara göre oyuncuların ortalama yaşlarının histogram grafiği', color='black')
+plt.ylabel('Takım Sayısı', color='black')
+plt.xlabel('Ortalama Yaş', color='black')
+plt.grid()
+plt.show()
+# endregion
+
+
+# region Veri setindeki oyuncuların takımlarına göre ortalama yaşlarının kutu grafiği (box plot) ile dağılımını göster
+df_takimlarin_ort_yasi = df.groupby('Team')[['Age']].mean()
+print(df_takimlarin_ort_yasi.sort_values('Age', ascending=False))
+
+df_takimlarin_ort_yasi.plot(kind='box', figsize=(10,7), stacked=False, color='b', vert=False)
+plt.title('Takımalra Göre Oyuncuların Ortalama Yaşlarının Kutu Grafiği', color='black')
+plt.ylabel('Takımlar', color='black')
+plt.xlabel('Ortalama Yaş',color='black')
+plt.grid()
+plt.show()
+# endregion
+
+
+# region Veri setindeki oyuncuların takımlarına göre ortalama yaşlarını göstermek için bir çubuk grafik oluştur
+df_takimlarin_ort_yasi = df.groupby('Team')[['Age']].mean()
+print(df_takimlarin_ort_yasi.sort_values('Age', ascending=False))
+
+df_takimlarin_ort_yasi.plot(kind='bar', figsize=(10,7), stacked=False, alpha=0.50, color='r')
+plt.title('Takımlara göre oyuncuların ortalama yaşlarının bar grafiği', color='black')
+plt.ylabel('Takım Sayısı', color='black')
+plt.xlabel('Ortalama Yaş', color='black')
+plt.show()
+# endregion
+
+
+# region Veri setindeki oyuncuların yaş ve pozisyon dağılımını göstermek için bir scatter plot oluştur
+df_oyuncu_yas = df['Age']
+print(df_oyuncu_yas)
+df_oyuncu_pozisyon = df['Position']
+print(df_oyuncu_pozisyon)
+plt.figure(figsize=(10,7))  # figsize parametresini doğru şekilde kullanmak için plt.figure() fonksiyonu içinde tanımlayıp yaz yoksa aşağıdaki kullanımla çakışıyor
+plt.plot(df_oyuncu_yas, df_oyuncu_pozisyon, 'o', alpha=0.50, color='blue')  # 'o' sembolüyle scatter plot oluşturulur
+plt.title('Oyuncuların Yaş ve Pozisyon Dağılımı', color='black')  # birden fazla dataframe kullanıp hepsini plt.plot() yazıp içine önce x ekseni sonra y ekseni halinde yazdık
+plt.ylabel('Pozisyon', color='b')
+plt.xlabel('Yaş', color='b')
+plt.grid()
+plt.show()
 # endregion
