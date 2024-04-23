@@ -3,6 +3,7 @@
 import pandas as pd
 import numpy as np
 from os import path
+import matplotlib.pyplot as plt
 
 df = pd.read_csv('Data/amazon_prime_users.csv')
 print(df.to_string())
@@ -62,7 +63,7 @@ print(result.shape[0])
 # endregion
 
 
-# region En taşlı ilk 2 kullanıcıyı isimlerine göre listele
+# region En yaşlı 2 kullanıcıyı isimlerine göre listele
 print(df.groupby('Name')[['Date of Birth']].max().sort_values('Date of Birth', ascending=False).tail(2))
 # endregion
 
@@ -101,4 +102,58 @@ def username_bulucu(Username: str):
 
 
 print(df[df['Username'].apply(username_bulucu)][['Username', 'Name']].sort_values('Username', ascending=False).to_string())
+# endregion
+
+
+# region Amazon Prime kullanıcılarının yaş dağılımını göstermek için bir histogram oluştur  ???? xticks S O R ?????
+df['Date of Birth'] = pd.to_datetime(df['Date of Birth'])  # pd.to_datetime() fonksiyonu 'Date of Birth' sütunundaki değerleri datetime nesnelerine dönüştürdü ve işlem yapmamız kolaylaştı
+df['Age'] = pd.Timestamp.now().year - df['Date of Birth'].dt.year  # pd.Timestamp.now().year ifadesi şu anki yılın değerini verir. Bu değeri kullanıcıların doğum yıllarının değerlerinden çıkartarak yaşlarını hesaplıyoruz. dt.year ifadesi datetime nesnesinin yıl kısmını döndürür.
+
+count, bin_edges = np.histogram(df['Age'], bins=10)
+print(count)
+print(bin_edges)
+
+df['Age'].plot(kind='hist', figsize=(10,7), stacked=False, alpha=0.5, color='blue', xticks=bin_edges)
+plt.title('Amazon Prime kullanıcılarının yaş dağılımını gösteren histogram grafiği', color='r')
+plt.ylabel('Kullanıcı Sayısı', color='r')
+plt.xlabel('Yaş', color='r')
+plt.grid()
+plt.show()
+# endregion
+
+
+# region Cinsiyete göre Prime kullanıcılarının sayısını göstermek için bir bar plot oluştur
+df_gender_sayici = df['Gender'].value_counts()
+print(df_gender_sayici)
+
+df_gender_sayici.plot(kind='bar', stacked=False, figsize=(10,7), alpha=0.75, color='green')
+plt.title('Cinsiyete Göre Prime Kullanıcılarının Sayısının Bar Grafiği', color='r')
+plt.ylabel('Cinsiyetlere Göre Kullanıcı Sayısı', color='r')
+plt.xlabel('Cinsiyet', color='r')
+plt.show()
+# endregion
+
+
+# region Prime üyeliğine katılan kullanıcıların üyelik planları ne kadar ve planları cinsiyete göre bar grafiği çiz
+df_plan = df.groupby('Subscription Plan')[['Subscription Plan', 'Gender']].value_counts()
+print(df_plan)
+
+df_plan.plot(kind='bar', figsize=(10,7), stacked=False, alpha=0.50, color='b')
+plt.title('Cinsiyete göre üyelik dağılımı', color='r')
+plt.ylabel('Üyelik Sayısı', color='r')
+plt.xlabel('Cinsiyet', color='r')
+plt.grid()
+plt.show()
+# endregion
+
+
+# region Prime üyeliğine katılan kullanıcıların üyelik planları ne kadar ve planları cinsiyete göre pasta grafiği çiz ve yüzde dilimlerini pastanın içinde göster
+df_plan = df.groupby('Subscription Plan')[['Subscription Plan', 'Gender']].value_counts()
+print(df_plan)
+
+df_plan.plot(kind='pie', figsize=(10,7), shadow=True, labels=None, stacked=False, autopct='%1.1f%%', startangle=90, pctdistance=0.5, explode=[0.1,0.1,0.1,0.1])
+plt.axis('equal')
+plt.title('Cinsiyete göre üyelik dağılımı pasta grafiği', color='r')
+plt.legend(labels=df_plan.index, prop={'size':8})
+plt.show()
 # endregion
