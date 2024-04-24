@@ -144,8 +144,10 @@ print(df_continents.head().to_string())
 
 df_continents['total'].plot(kind='pie', stacked=False, figsize=(10,7), autopct='%1.1f%%', startangle=90, labels=None, shadow=True, pctdistance=1.1, explode=[0.1, 0.1, 0.1, 0.1, 0.1, 0.1])
 plt.axis('equal')  # pastanın dilimlerinin dairesel olmasını sağlar
-plt.legend(labels=df_continents.index, prop={'size':8})  #  legend, grafiğin hangi renk veya stilin hangi veriyle ilişkilendirildiğini gösteren küçük bir açıklama kutusudur.
-plt.show()  # labels, legendeki her bir öğenin etiketlerini içeren bir liste veya dizi olarak belirtilir. Bu etiketler genellikle grafiğin hangi veriyle ilişkilendirildiğini açıklar.
+plt.suptitle('Kıtalara göre göçmen dağılımının pasta grafiği', color='r', size=20)  # suptitle() başlığı yukarıya çıkarıp ortalar. Kullanım olarak title() ile aynıdır..!
+plt.legend(df_continents.index, prop={'size': 10})  # legend, grafiğin hangi renk veya stilin hangi veriyle ilişkilendirildiğini gösteren küçük bir açıklama kutusudur.
+plt.show()
+# labels, legendeki her bir öğenin etiketlerini içeren bir liste veya dizi olarak belirtilir. Bu etiketler genellikle grafiğin hangi veriyle ilişkilendirildiğini açıklar.
 # autopct her bir dilime gelecek göçmen sayısını formatlayarak yazdırır
 # startangle başlangıç açısıdır
 # labels=None ülkelerin isimlerinin pasta dilimi üzerinde gözükmesini engeller
