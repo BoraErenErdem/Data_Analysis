@@ -218,7 +218,7 @@ plt.show()
 # endregion
 
 
-# region Amazon Prime kullanıcılarının hangi ayda üyeliklerini başlattığını gösteren bir histogram grafik oluştur  ??? Neden sütuna atayınca oldu da yeni df'e atayınca olmadı S O R ?????
+# region Amazon Prime kullanıcılarının hangi ayda üyeliklerini başlattığını gösteren bir histogram grafik oluştur
 df['Membership Start Date'] = pd.to_datetime(df['Membership Start Date'])
 df['Kalan Üyelik Süresi'] = pd.Timestamp.now().month - df['Membership Start Date'].dt.month
 print(df[['Membership Start Date','Kalan Üyelik Süresi']])

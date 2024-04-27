@@ -230,7 +230,7 @@ print(df['age'])
 # endregion
 
 
-# region category sütununu dummy variable değişkenine dönüştür  ???? mantıklı mı S O R ????
+# region category sütununu dummy variable değişkenine dönüştür
 df_dummy_variable = pd.get_dummies(df['category'], dtype=float)
 print(df_dummy_variable)
 # endregion
@@ -380,7 +380,7 @@ plt.ylabel('Servet')
 plt.grid()
 plt.show()
 
-corr = df['age'].corr(df['finalWorth'])  # kolerasyon katsayısı -1 ve 1 arasında olur. 0'a yaklaştıkça iki özellik arasındaki ilişki zayıflar.
+corr = df['age'].corr(df['finalWorth'])  # kolerasyon katsayısı -1 ve 1 arasında olur. -1'e yaklaştıkça iki özellik arasındaki ilişki zayıflar.
 print(f'Yaş ve Servet Arasındaki Korelasyon Katsayısı:', corr)
 # endregion
 
