@@ -216,7 +216,7 @@ plt.show()
 # endregion
 
 
-# region Normalizasyon, Standartizasyon ve Dummy Variable Uygulamaları  ?????? STANDARTİZASYON NEREDE YAPILABİLİR ??????
+# region Normalizasyon, Standartizasyon ve Dummy Variable Uygulamaları
 
 # region finalWorth sütununu Normalizasyon yap
 df['finalWorth'] = df['finalWorth'] / df['finalWorth'].max()

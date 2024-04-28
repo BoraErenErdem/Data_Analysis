@@ -105,7 +105,7 @@ print(df[df['Username'].apply(username_bulucu)][['Username', 'Name']].sort_value
 # endregion
 
 
-# region Amazon Prime kullanıcılarının yaş dağılımını göstermek için bir histogram oluştur  ???? xticks S O R ?????
+# region Amazon Prime kullanıcılarının yaş dağılımını göstermek için bir histogram oluştur
 df['Date of Birth'] = pd.to_datetime(df['Date of Birth'])  # pd.to_datetime() fonksiyonu 'Date of Birth' sütunundaki değerleri datetime nesnelerine dönüştürdü ve işlem yapmamız kolaylaştı
 df['Age'] = pd.Timestamp.now().year - df['Date of Birth'].dt.year  # pd.Timestamp.now().year ifadesi şu anki yılın değerini verir. Bu değeri kullanıcıların doğum yıllarının değerlerinden çıkartarak yaşlarını hesaplıyoruz. dt.year ifadesi datetime nesnesinin yıl kısmını döndürür.
 print(df[['Name','Age']])
